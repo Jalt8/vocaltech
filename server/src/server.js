@@ -2,8 +2,18 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mailgun = require('mailgun-js');
+const path = require('path');
 
 const app = express();
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+});
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',

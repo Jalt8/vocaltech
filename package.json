@@ -10,7 +10,7 @@
     "install:client": "cd client && npm install",
     "install:server": "cd server && npm install",
     "install": "npm run install:client && npm run install:server",
-    "heroku-postbuild": "npm run install:client && npm run build"
+    "heroku-postbuild": "npm run install:client -- --include=dev && npm run build"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"

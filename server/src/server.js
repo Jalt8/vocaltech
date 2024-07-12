@@ -6,15 +6,6 @@ const path = require('path');
 
 const app = express();
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../../client/dist')));
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   methods: ['POST', 'GET', 'OPTIONS'],
@@ -25,6 +16,7 @@ app.use(express.json());
 
 const mg = mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
 
+// Define your API routes here
 app.post('/api/send-email', async (req, res) => {
   const { name, email, company, message } = req.body;
 
@@ -51,24 +43,13 @@ app.post('/api/send-email', async (req, res) => {
   }
 });
 
-app.post('/api/send-email2', (req, res) => {
-    const data = {
-      from: 'Excited User <me@samples.mailgun.org>',
-      to: 'juvan@vocaltech.net',
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomeness!'
-    };
-    
-    mg.messages().send(data, (error, body) => {
-      if (error) {
-        console.error('Error sending test email:', error);
-        res.status(500).json({ error: error.message });
-      } else {
-        console.log('Test email sent successfully:', body);
-        res.json({ message: 'Test email sent', details: body });
-      }
-    });
-  });
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

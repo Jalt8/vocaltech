@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#4A90E2" />
+  
+  <!-- Headset -->
+  <path d="M65 100 Q65 70 100 70 Q135 70 135 100" stroke="#FFFFFF" stroke-width="12" fill="none" stroke-linecap="round" />
+  <circle cx="65" cy="100" r="15" fill="#FFFFFF" />
+  <circle cx="135" cy="100" r="15" fill="#FFFFFF" />
+  
+  <!-- Speech bubble -->
+  <path d="M85 120 Q100 140 115 120 L115 140 Q100 160 85 140 Z" fill="#FFFFFF" />
+</svg>

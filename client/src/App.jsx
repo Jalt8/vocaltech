@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import ReactGA from "react-ga4";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -12,9 +13,24 @@ import LandingPage from './pages/LandingPage';
 import TermsOfService from './pages/TermsOfServicePage';
 import PrivacyPolicy from './pages/PrivacyPolicyPage';
 
+// Replace 'Your-Measurement-ID' with your actual GA4 Measurement ID
+ReactGA.initialize("Your-Measurement-ID");
+
+// Create a component to handle route changes
+function RouteTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   return (
     <Router>
+      <RouteTracker /> {/* Add this inside the Router */}
       <div className="App">
         <Header />
         <Routes>
